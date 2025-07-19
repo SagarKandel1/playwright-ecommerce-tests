@@ -1,15 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-test('User can login successfully', async ({ page }) => {
+test('User can login with valid email and password', async ({ page }) => {
   const loginPage = new LoginPage(page);
 
-  // Navigate to login page URL (example URL, adjust if needed)
-  await page.goto('https://the-internet.herokuapp.com/login');
+  await loginPage.goto();
+  await loginPage.login('user@phptravels.com', 'demouser');
 
-  // Use the login method from LoginPage to perform login
-  await loginPage.login('testuser@example.com', 'testpassword');
-
-  // Assert that after login the URL changes or a logout button appears
-  await expect(page).toHaveURL(/dashboard|account|profile/); // adjust regex to your site
+  // ✅ Assert login success
+ await expect(page).toHaveURL('https://www.phptravels.net/dashboard');
+  
 });
